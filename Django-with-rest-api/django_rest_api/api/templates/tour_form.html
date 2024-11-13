@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ form.instance.pk|yesno:"Edit Tour Package,Add New Tour Package" }}</title>
+    <style>
+        /* Basic reset and styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #f9f9f9;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Custom file upload styling */
+        .custom-file-upload {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #007bff;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            text-align: center;
+        }
+
+        .custom-file-upload:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn-submit,
+        .btn-cancel {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-right: 10px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-submit {
+            background-color: #007bff;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-cancel {
+            background-color: #f44336;
+        }
+
+        .btn-cancel:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ form.instance.pk|yesno:"Edit Tour Package,Add New Tour Package" }}</h1>
+    <div class="form-container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Display form fields -->
+            <div class="form-group">
+                {{ form.title.label_tag }}
+                {{ form.title }}
+            </div>
+
+            <div class="form-group">
+                {{ form.category.label_tag }}
+                {{ form.category }}
+            </div>
+
+            <div class="form-group">
+                {{ form.price.label_tag }}
+                {{ form.price }}
+            </div>
+
+            <div class="form-group">
+                {{ form.afterDiscount.label_tag }}
+                {{ form.afterDiscount }}
+            </div>
+
+            <div class="form-group">
+                {{ form.rating.label_tag }}
+                {{ form.rating }}
+            </div>
+
+            <div class="form-group">
+                {{ form.reviews.label_tag }}
+                {{ form.reviews }}
+            </div>
+
+            <!-- Custom file input -->
+            <div class="form-group">
+                {{ form.image.label_tag }}
+                <label class="custom-file-upload">
+                    Choose File
+                    <input type="file" name="image" class="file-input" onchange="document.getElementById('file-name').textContent = this.files[0].name">
+                </label>
+                <span id="file-name" style="margin-left: 10px; color: #666;">No file chosen</span>
+            </div>
+
+            <!-- Additional form fields for TourDetails model -->
+            <div class="form-group">
+                {{ form.mapURL.label_tag }}
+                {{ form.mapURL }}
+            </div>
+
+            <div class="form-group">
+                {{ form.des.label_tag }}
+                {{ form.des }}
+            </div>
+
+            <div class="form-group">
+                {{ form.tourInfo.label_tag }}
+                {{ form.tourInfo }}
+            </div>
+
+            <div class="form-group">
+                {{ form.PlacesCovered.label_tag }}
+                {{ form.PlacesCovered }}
+            </div>
+
+            <div class="form-group">
+                {{ form.Duration.label_tag }}
+                {{ form.Duration }}
+            </div>
+
+            <div class="form-group">
+                {{ form.StartPoint.label_tag }}
+                {{ form.StartPoint }}
+            </div>
+
+            <div class="form-group">
+                {{ form.EndPoint.label_tag }}
+                {{ form.EndPoint }}
+            </div>
+
+            <div class="form-group">
+                {{ form.highlights.label_tag }}
+                {{ form.highlights }}
+            </div>
+
+            <div class="form-group">
+                {{ form.itinerary.label_tag }}
+                {{ form.itinerary }}
+            </div>
+
+            <!-- Submit and Cancel Buttons -->
+            <button type="submit" class="btn-submit">Save</button>
+            <a href="{% url 'item_list' %}" class="btn-cancel">Cancel</a>
+        </form>
+    </div>
+
+    <script>
+        document.querySelector('.file-input').addEventListener('change', function() {
+            document.getElementById('file-name').textContent = this.files[0].name;
+        });
+    </script>
+</body>
+</html>

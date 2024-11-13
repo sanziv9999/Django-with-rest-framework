@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Packages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha384-2RJUT9A1FTgzdlldknrc18UDLjCyjwYbiNwPl5BQjHkFjxalnAec0n2WZ/0hnuQ5" crossorigin="anonymous">
+    <style>
+        /* Basic reset and styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .add-item {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .add-item:hover {
+            background-color: #0056b3;
+        }
+
+        /* Grid container for cards */
+        .item-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Styling for each item card */
+        .item-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .item-details {
+            padding: 15px;
+        }
+
+        .item-details h2 {
+            font-size: 1.2em;
+            color: #333;
+            margin: 10px 0 10px;
+        }
+
+        .item-details p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+            color: #007bff;
+        }
+
+        .location i {
+            margin-right: 5px;
+        }
+
+        .item-details .price {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .item-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+
+        .item-actions a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        .item-actions a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tour Packages</h1>
+    <a href="{% url 'tour_create' %}" class="add-item">Add New Tour Package</a>
+
+    <div class="item-grid">
+        {% for tour in tours %}
+            <div class="item-card">
+                {% if tour.image %}
+                    <img src="{{ tour.image.url }}" alt="{{ tour.title }}">
+                {% endif %}
+                <div class="item-details">
+                    <!-- Location with icon -->
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i> {{ tour.category }}
+                    </div>
+                    <h2>{{ tour.title }}</h2>
+                    <p><strong>Rating:</strong> {{ tour.rating }} / 5 ({{ tour.reviews }} reviews)</p>
+                    <p><strong>Price:</strong> ${{ tour.price }} (After Discount: ${{ tour.afterDiscount }})</p>
+                    <p><small>Created on: {{ tour.created_at|date:"M d, Y" }}</small></p>
+                </div>
+                <div class="item-actions">
+                    <a href="{% url 'tour_update' tour.id %}">Edit</a>
+                    <a href="{% url 'tour_delete' tour.id %}">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
